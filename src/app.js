@@ -9,6 +9,19 @@ import './styles.css';
 function App({store}) {
 
   const list = store.getState().list;
+    //Исходя из цифры возвращаем конец title
+    function formatNumberSuffix(number) {
+
+        const lastDigit = number % 10;
+        if (number > 11 && number < 15){
+            return 'раз'
+        }
+        if (lastDigit === 2 || lastDigit === 3 || lastDigit === 4) {
+            return 'раза';
+        } else {
+            return 'раз';
+        }
+    }
 
   return (
     <div className='App'>
@@ -28,7 +41,7 @@ function App({store}) {
                   {/*<div className='Item-title'>{item.title}</div>*/}
                   {/*Если значение item.allocated > 0, тогда отображаем в title*/}
                   <div className='Item-title'>
-                      {item.title} {item.allocated > 0 && `| выделяли ${item.allocated} раз`}
+                      {item.title} {item.allocated > 0 && `| выделяли ${item.allocated} ${formatNumberSuffix(item.allocated)}`}
                   </div>
                 <div className='Item-actions'>
                   <button onClick={() => store.deleteItem(item.code)}>
