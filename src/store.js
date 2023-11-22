@@ -42,9 +42,11 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
+    const nextID = this.state.maxID + 1;
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: this.state.list.length + 1, title: 'Новая запись'}]
+      maxID: nextID,
+      list: [...this.state.list, {code: nextID, title: 'Новая запись', allocated: 0}]
     })
   };
 
@@ -69,10 +71,17 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+          //Условие ниже накручивает счетчик выделений,
+          // в том случае, если это не повторный клик уже выделенного элемента
+          if (item.selected) {
+            item.allocated += 1;
+          }
+        } else {
+          item.selected = false; // Сбрасываем выделение у других записей
         }
         return item;
       })
-    })
+    });
   }
 }
 

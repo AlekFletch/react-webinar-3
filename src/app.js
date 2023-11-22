@@ -1,5 +1,4 @@
 import React from 'react';
-import {createElement} from './utils.js';
 import './styles.css';
 
 /**
@@ -26,7 +25,11 @@ function App({store}) {
               <div className={'Item' + (item.selected ? ' Item_selected' : '')}
                    onClick={() => store.selectItem(item.code)}>
                 <div className='Item-code'>{item.code}</div>
-                <div className='Item-title'>{item.title}</div>
+                  {/*<div className='Item-title'>{item.title}</div>*/}
+                  {/*Если значение item.allocated > 0, тогда отображаем в title*/}
+                  <div className='Item-title'>
+                      {item.title} {item.allocated > 0 && `| выделяли ${item.allocated} раз`}
+                  </div>
                 <div className='Item-actions'>
                   <button onClick={() => store.deleteItem(item.code)}>
                     Удалить
